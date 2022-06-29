@@ -24,6 +24,7 @@ export class AuthService {
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
       if (user) {
+        console.info("logged in user data changed.");
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user')!);
@@ -35,9 +36,9 @@ export class AuthService {
   }
 
   // Sign in with email/password
-  SignIn(email: string, password: string) {
+  SignIn(username: string, password: string) {
     return this.afAuth
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(username, password)
       .then((result) => {
         this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
